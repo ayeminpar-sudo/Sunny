@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter for You</title>
+    <style>
+        :root {
+            --bg-color: #fce4ec;
+            --primary-pink: #ff80ab;
+            --dark-pink: #c51162;
+            --text-color: #4a148c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Falling Hearts Background Animation */
+        .heart-bg {
+            position: absolute;
+            font-size: 20px;
+            color: var(--primary-pink);
+            opacity: 0.6;
+            animation: fall linear infinite;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(244, 143, 177, 0.3);
+            border: 3px dashed var(--primary-pink);
+            max-width: 500px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+
+        /* SCREEN 1: ENVELOPE */
+        .envelope-wrapper {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+        .envelope-icon {
+            font-size: 80px;
+            line-height: 1;
+        }
+
+        /* SCREEN 2: THE QUESTION */
+        .gif-container {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 30px;
+            height: 60px;
+            position: relative;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+        }
+        #yesBtn:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+        }
+
+        /* SCREEN 3: THE LETTER */
+        .letter-content {
+            text-align: left;
+            line-height: 1.6;
+            font-size: 16px;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 10px;
+            white-space: pre-line; /* Keeps line breaks from your text customization */
+        }
+        /* Custom scrollbar for the letter */
+        .letter-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .letter-content::-webkit-scrollbar-thumb {
+            background: var(--primary-pink);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: Closed Envelope -->
+    <div id="screen1" class="container">
+        <!-- CUSTOMIZE THIS TEXT: Header above the envelope -->
+        <h1>♡ Letter for Sunny!! ♡</h1>
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope-icon">✉️</div>
+            <p>Click to open</p>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: The "Cx lrr?" Question -->
+    <div id="screen2" class="container hidden">
+        <!-- CUSTOMIZE THIS TEXT: The question -->
+        <h2>Do you love me?</h2>
+        
+        <!-- You can keep the emoji cat or swap out text/gifs -->
+        <div class="gif-container">🐈‍⬛❤️</div>
+        
+        <div class="btn-group">
+            <button id="yesBtn" onclick="sayYes()">YES</button>
+            <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">NO</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: The Final Letter -->
+    <div id="screen3" class="container hidden">
+        <!-- CUSTOMIZE THIS TEXT: Celebration Header -->
+        <h2>Yippeee!! 🎉</h2>
+        <div style="font-size: 40px; margin-bottom: 15px;">🧸✨</div>
+        
+        <!-- CUSTOMIZE THIS TEXT: Your actual love letter contents go inside the div below -->
+        <div class="letter-content">
+            Sunny,
+
+            Di tine sunny a twt so small things ly dwy ka a sa loke py chin dhr fo example like this.Sunny a twt tok br mha ma hok py mk tobi ka tok thy chrr yy lyk ya dl pls a thi mhk pyu my
+ hardwork :<. Ouu tk di srr koh br thr ko yy yin nk thy tok ml luu ka ma nel yy lyk ya thy dl. Anyways cx tl loh shk lyk dhr pyn ma cx loh ll ma ya woo option mhr pyn ma cx tk
+ option ma py htr woo haha. Mwh:>
+    </div>
+
+    <script>
+        // Create falling hearts decorative background
+        function createHearts() {
+            const heartIcons = ['❤️', '💖', '💗', '💓', '💕'];
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                document.body.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // Navigation functions
+        function openEnvelope() {
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+            resetNoButton();
+        }
+
+        function sayYes() {
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen3').classList.remove('hidden');
+        }
+
+        // Trick "NO" button logic to move away randomly within the button zone
+        function moveNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const btnGroup = document.querySelector('.btn-group');
+            
+            // Get boundaries of the containing area so it doesn't leave the box completely
+            const padding = 20;
+            const maxX = btnGroup.clientWidth - noBtn.clientWidth - padding;
+            const maxY = btnGroup.clientHeight - noBtn.clientHeight - padding;
+            
+            // Generate a random spot, ensuring it moves significantly from center
+            let randomX = Math.floor(Math.random() * maxX);
+            let randomY = (Math.random() > 0.5 ? 1 : -1) * (Math.floor(Math.random() * 40) + 20); 
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function resetNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.left = 'auto';
+            noBtn.style.top = 'auto';
+            noBtn.style.right = '20px'; // Initial resting side
+        }
+    </script>
+</body>
+</html>
